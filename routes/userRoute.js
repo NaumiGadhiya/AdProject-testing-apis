@@ -4,9 +4,10 @@ const {loginUser,registerUser,getAllUsers,getUserById,updateUser,forgetPassword,
 
 
 //-------- configure all apis ----------
-router.route("/signup ").get(getAllUsers).post(registerUser);
+router.route("/getall").get(getAllUsers);
+router.route("/signup").post(registerUser);
 router.post("/login",loginUser);
 router.post("/resetpassword/:email",forgetPassword);
-router.route("/findby/:id").get(getUserById).patch(updateUser).delete(deleteUser);
+router.route("/getby/:id").get(getUserById).patch(updateUser).delete(deleteUser);
 
 module.exports=router;
