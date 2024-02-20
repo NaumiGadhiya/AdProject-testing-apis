@@ -82,8 +82,8 @@ const loginUser = errorHandler(async (req, res) => {
 //-------- reset password ----------
 const forgetPassword = errorHandler(async (req, res) => {
     try {
-        const { email } = req.query.email;
-        const user = await userModel.findOne({ email });
+        const userEmail = req.query.email;
+        const user = await userModel.findOne({ email: userEmail });
         const newPassword = req.body.newPassword;
         const hashedPassword = await bcrypt.hash(newPassword, 10);
 
@@ -193,7 +193,10 @@ const getUserById=errorHandler(async(req,res,next)=>{
 //-------- delete user profile ----------
 const deleteUser=errorHandler(async(req,res,next)=>{
     try {
-        const user=await userModel.findOneAndDelete({_id:req.query.id});
+        
+        const userId = req.query.id; 
+        const user = await userModel.findOneAndDelete({_id: userId});
+        // const user=await userModel.findOneAndDelete({_id:req.query.id});
         if (!user) {
             res.status(404).json({error_message:"User not found !"});
         }else{
