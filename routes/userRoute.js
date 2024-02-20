@@ -7,7 +7,7 @@ const {loginUser,registerUser,getAllUsers,getUserById,updateUser,forgetPassword,
 router.route("/getall").get(getAllUsers);
 router.route("/signup").post(registerUser);
 router.post("/login",loginUser);
-router.post("/resetpassword/:email",forgetPassword);
-router.route("/getby/:id").get(getUserById).patch(updateUser).delete(deleteUser);
+router.post("/resetpassword",forgetPassword);
+router.route("/getby").get(getUserById).patch(updateUser).delete(deleteUser);
 
 module.exports=router;

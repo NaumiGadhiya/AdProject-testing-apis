@@ -82,7 +82,7 @@ const loginUser = errorHandler(async (req, res) => {
 //-------- reset password ----------
 const forgetPassword = errorHandler(async (req, res) => {
     try {
-        const { email } = req.params;
+        const { email } = req.query.email;
         const user = await userModel.findOne({ email });
         const newPassword = req.body.newPassword;
         const hashedPassword = await bcrypt.hash(newPassword, 10);
@@ -116,7 +116,7 @@ const forgetPassword = errorHandler(async (req, res) => {
 const updateUser = errorHandler(async (req, res, next) => {
     try {
         const { name, email, contactNo, password, role, profileUrl } = req.body;
-        const userId = req.params.id; 
+        const userId = req.query.id; 
         const user = await userModel.findById(userId);
 
         if (!name || !email || !contactNo ||!role || !password || !profileUrl) {
@@ -173,7 +173,9 @@ const getAllUsers=errorHandler(async(req,res,next)=>{
 //-------- find by id ----------
 const getUserById=errorHandler(async(req,res,next)=>{
     try {
-        const user=await userModel.findById(req.params.id);
+         const userId = req.query.id; 
+        const user = await userModel.findById(userId);
+        // const user=await userModel.findById(req.params.id)
         if (!user) {
             res.status(404).json({error_message:"User not found !"});
         }
@@ -191,7 +193,7 @@ const getUserById=errorHandler(async(req,res,next)=>{
 //-------- delete user profile ----------
 const deleteUser=errorHandler(async(req,res,next)=>{
     try {
-        const user=await userModel.findOneAndDelete({_id:req.params.id});
+        const user=await userModel.findOneAndDelete({_id:req.query.id});
         if (!user) {
             res.status(404).json({error_message:"User not found !"});
         }else{
